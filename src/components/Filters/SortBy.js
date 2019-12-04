@@ -25,7 +25,7 @@ export default class SortBy extends React.Component {
                 label: "Рейтинг по возростанию",
                 value: "vote_average.asc"
             }]
-    }
+    };
 
     render() {
         const {
@@ -36,7 +36,7 @@ export default class SortBy extends React.Component {
 
 
         return (
-            <div className="form-group">
+            <div className="form-group row">
                 <label htmlFor="sort_by">Сортировать по:</label>
                 <select className="form-control"
                         value={sort_by}

@@ -1,5 +1,6 @@
 import React from "react";
 import SortBy from "./SortBy";
+import Year from "./Year";
 
 export default class Filters extends React.Component {
     render() {
@@ -8,7 +9,8 @@ export default class Filters extends React.Component {
             filters: {sort_by},
             onChangeFilters,
             onChangePage,
-            page
+            page,
+            onChangeYear
         } = this.props;
 
         return (
@@ -16,7 +18,7 @@ export default class Filters extends React.Component {
             <form className="mb-3">
                 <SortBy onChangeFilters={onChangeFilters}
                         sort_by={sort_by}/>
-                <div className="btn-group">
+                <div className="btn-group row mb-3 container-fluid">
                     <button
                         type="button"
                         className="btn btn-light"
@@ -33,6 +35,8 @@ export default class Filters extends React.Component {
                         Вперед
                     </button>
                 </div>
+                <Year onChangeYear={onChangeYear}/>
+
             </form>
         )
             ;

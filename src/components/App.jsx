@@ -10,7 +10,8 @@ export default class App extends React.Component {
             filters: {
                 sort_by: "vote_average.desc"
             },
-            page: 1
+            page: 1,
+            year: false
         }
     }
 
@@ -29,9 +30,30 @@ export default class App extends React.Component {
 
     onChangePage = page => {
         this.setState({
-          page
+            page
         })
     };
+
+    onChangeYear = event => {
+        event.preventDefault();
+        // const values = { ...this.state.values }
+        // values[event.target.name] = event.target.value
+        // this.setState({ values })
+        const year = event.target.value;
+
+        const newFilters = {
+            ...this.state.year,
+            year
+        };
+
+        this.setState(prevState => ({
+                year
+            })
+        )
+
+        console.log("val ", year);
+
+    }
 
     render() {
         const {filters} = this.state;
@@ -46,7 +68,8 @@ export default class App extends React.Component {
                                 <Filters filters={filters}
                                          onChangeFilters={this.onChangeFilters}
                                          page={this.state.page}
-                                         onChangePage={this.onChangePage}/>
+                                         onChangePage={this.onChangePage}
+                                         onChangeYear={this.onChangeYear}/>
                             </div>
                         </div>
                     </div>

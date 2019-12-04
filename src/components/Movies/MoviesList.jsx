@@ -20,7 +20,6 @@ export default class MovieList extends Component {
                 return response.json();
             })
             .then(data => {
-
                 this.setState({
                     movies: data.results
                 });
@@ -39,10 +38,10 @@ export default class MovieList extends Component {
             this.getMovies(this.props.filters, 1);
             this.props.onChangePage(1);
         }
-      if (this.props.page !== prevProps.page) {
-        this.getMovies(this.props.filters, this.props.page);
-        console.log("componentDidUpdate", prevProps.page, this.props.page)
-      }
+        if (this.props.page !== prevProps.page) {
+            this.getMovies(this.props.filters, this.props.page);
+            console.log("componentDidUpdate", prevProps.page, this.props.page)
+        }
     }
 
     render() {
