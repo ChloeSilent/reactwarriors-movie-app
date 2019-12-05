@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export default class SortBy extends React.Component {
     static propTypes = {
         onChangeFilters: PropTypes.func.isRequired,
-        sort_by: PropTypes.string.isRequired,
+        sort_by: PropTypes.array.isRequired,
     };
 
     static defaultProps = {
@@ -31,20 +31,21 @@ export default class SortBy extends React.Component {
         const {
             sort_by,
             onChangeFilters,
-            options
+            options,
         } = this.props;
-
+        //console.log(sort_by);
 
         return (
             <div className="form-group row">
                 <label htmlFor="sort_by">Сортировать по:</label>
                 <select className="form-control"
-                        value={sort_by}
+                        value={sort_by[0]}
                         onChange={onChangeFilters}
                         name="sort_by"
                 >
-                    {options.map((option, index) => {
-                        return <option key={option.value} value={option.value}>{option.label}</option>
+                    {options.map((option) => {
+                        return <option key={option.value}
+                                       value={option.value}>{option.label}</option>
                     })}
                 </select>
             </div>

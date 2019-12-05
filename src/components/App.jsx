@@ -8,10 +8,11 @@ export default class App extends React.Component {
         super();
         this.state = {
             filters: {
-                sort_by: "vote_average.desc"
+                sort_by: ["popularity.desc"]
             },
             page: 1,
-            year: false
+            total_pages: "",
+            primary_release_year: []
         }
     }
 
@@ -34,26 +35,23 @@ export default class App extends React.Component {
         })
     };
 
-    onChangeYear = event => {
-        event.preventDefault();
-        // const values = { ...this.state.values }
-        // values[event.target.name] = event.target.value
-        // this.setState({ values })
-        const year = event.target.value;
-
-        const newFilters = {
-            ...this.state.year,
-            year
-        };
-
-        this.setState(prevState => ({
-                year
-            })
-        )
-
-        console.log("val ", year);
-
-    }
+    // onChangePrimaryReleaseYear = event => {
+    //     event.preventDefault();
+    //     const primary_release_year = event.target.value;
+    //
+    //     this.setState(prevState => ({
+    //             primary_release_year
+    //         })
+    //     );
+    //
+    //
+    // };
+    //
+    // keyPressOnYear = event => {
+    //     if (event.keyCode === 13) {
+    //         event.preventDefault();
+    //     }
+    // };
 
     render() {
         const {filters} = this.state;
@@ -68,15 +66,20 @@ export default class App extends React.Component {
                                 <Filters filters={filters}
                                          onChangeFilters={this.onChangeFilters}
                                          page={this.state.page}
+                                         total_pages={this.state.total_pages}
                                          onChangePage={this.onChangePage}
-                                         onChangeYear={this.onChangeYear}/>
+                                         //onChangePrimaryReleaseYear={this.onChangePrimaryReleaseYear}
+                                         // primary_release_year={this.state.primary_release_year}
+                                />
                             </div>
                         </div>
                     </div>
                     <div className="col-8">
                         <MoviesList filters={filters}
                                     page={this.state.page}
-                                    onChangePage={this.onChangePage}/>
+                                    onChangePage={this.onChangePage}
+                                    //primary_release_year={this.state.primary_release_year}
+                        />
                     </div>
                 </div>
             </div>

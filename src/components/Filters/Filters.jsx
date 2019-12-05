@@ -1,8 +1,11 @@
 import React from "react";
 import SortBy from "./SortBy";
 import Year from "./Year";
+import PropTypes from "prop-types";
 
 export default class Filters extends React.Component {
+
+
     render() {
 
         const {
@@ -10,7 +13,10 @@ export default class Filters extends React.Component {
             onChangeFilters,
             onChangePage,
             page,
-            onChangeYear
+            total_pages
+            // onChangePrimaryReleaseYear,
+            // primary_release_year,
+            // keyPressOnYear
         } = this.props;
 
         return (
@@ -35,7 +41,8 @@ export default class Filters extends React.Component {
                         Вперед
                     </button>
                 </div>
-                <Year onChangeYear={onChangeYear}/>
+                <span>{total_pages}</span>
+               <Year sort_by={sort_by}/>
 
             </form>
         )

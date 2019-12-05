@@ -1,18 +1,28 @@
 import React, {Component} from 'react';
 
+import {API_KEY_3, API_URL} from "../../api/api";
+
 class Year extends Component {
+
+
+    getYears = () => {
+
+        const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${this.props.sort_by}page=500&primary_release_year=all`;
+        fetch(link)
+            .then(response => {
+
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.results)
+            });
+    };
+
     render() {
-        const {onChangeYear} = this.props;
+
         return (
             <div className="form-group row">
-                <label htmlFor="example-number-input"
-                       className="col-8 col-form-label">Primary release year</label>
-                <div className="col-4">
-                    <input className="form-control"
-                           type="text"
-                           id="example-number-input"
-                           onChange={onChangeYear}/>
-                </div>
+                {this.getYears()}
             </div>
         );
     }
