@@ -33,7 +33,7 @@ export default class SortBy extends React.Component {
             onChangeFilters,
             options,
         } = this.props;
-        //console.log(sort_by);
+
 
         return (
             <div className="form-group row">

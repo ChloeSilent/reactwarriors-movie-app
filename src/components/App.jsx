@@ -2,18 +2,22 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 
+const initialState = {
+    filters: {
+        sort_by: ["popularity.desc"]
+    },
+    page: 1,
+    total_pages: "",
+    primary_release_year: "",
+    updatedGenres: []
+};
+
+
 export default class App extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            filters: {
-                sort_by: ["popularity.desc"]
-            },
-            page: 1,
-            total_pages: "",
-            primary_release_year: []
-        }
+        this.state = initialState;
     }
 
     onChangeFilters = (event) => {
@@ -29,29 +33,53 @@ export default class App extends React.Component {
         )
     };
 
+    onChangePrimaryReleaseYears = (event) => {
+
+        const {name, value} = event.target;
+        const primary_release_year = {
+            [name]: value
+        };
+
+        this.setState(state => ({
+            primary_release_year: primary_release_year.primary_release_year,
+        }));
+
+    };
+
+    changeTotalPages = page => {
+        this.setState(state => ({
+            total_pages: page,
+        }));
+
+        //console.log(page);
+    };
+
     onChangePage = page => {
         this.setState({
             page
-        })
+        });
     };
 
-    // onChangePrimaryReleaseYear = event => {
-    //     event.preventDefault();
-    //     const primary_release_year = event.target.value;
-    //
-    //     this.setState(prevState => ({
-    //             primary_release_year
-    //         })
-    //     );
-    //
-    //
-    // };
-    //
-    // keyPressOnYear = event => {
-    //     if (event.keyCode === 13) {
-    //         event.preventDefault();
-    //     }
-    // };
+    onReset = event => {
+        event.preventDefault()
+        this.setState({...initialState})
+    };
+
+    onCheckGenre = event => {
+        if (event.target.checked) {
+            this.setState({
+                updatedGenres: [...this.state.updatedGenres, event.target.value]
+            });
+        } else {
+            let remove = this.state.updatedGenres.indexOf(event.target.value);
+            this.setState({
+                    updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
+                }
+            );
+        }
+
+    };
+
 
     render() {
         const {filters} = this.state;
@@ -68,8 +96,10 @@ export default class App extends React.Component {
                                          page={this.state.page}
                                          total_pages={this.state.total_pages}
                                          onChangePage={this.onChangePage}
-                                         //onChangePrimaryReleaseYear={this.onChangePrimaryReleaseYear}
-                                         // primary_release_year={this.state.primary_release_year}
+                                         onChangePrimaryReleaseYears={this.onChangePrimaryReleaseYears}
+                                         primary_release_year={this.state.primary_release_year}
+                                         onReset={this.onReset}
+                                         onCheckGenre={this.onCheckGenre}
                                 />
                             </div>
                         </div>
@@ -78,7 +108,10 @@ export default class App extends React.Component {
                         <MoviesList filters={filters}
                                     page={this.state.page}
                                     onChangePage={this.onChangePage}
-                                    //primary_release_year={this.state.primary_release_year}
+                                    primary_release_year={this.state.primary_release_year}
+                                    onChangePage={this.onChangePage}
+                                    changeTotalPages={this.changeTotalPages}
+                                    updatedGenres={this.state.updatedGenres}
                         />
                     </div>
                 </div>
