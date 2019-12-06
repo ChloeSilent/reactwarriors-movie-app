@@ -1,7 +1,7 @@
 import React from "react";
 import SortBy from "./SortBy";
 import Year from "./Year";
-import PropTypes from "prop-types";
+import TotalPages from "./TotalPages"
 import {API_KEY_3, API_URL} from "../../api/api";
 
 export default class Filters extends React.Component {
@@ -10,7 +10,6 @@ export default class Filters extends React.Component {
 
         this.state = {
             genres: [],
-
         };
     }
 
@@ -70,11 +69,7 @@ export default class Filters extends React.Component {
                         Вперед
                     </button>
                 </div>
-                <div className="row">
-                    <span className="btn">Всего страниц</span>
-                    <span className="btn">{total_pages}</span>
-                </div>
-
+                <TotalPages total_pages={total_pages}/>
 
                 <Year onChangePrimaryReleaseYears={onChangePrimaryReleaseYears}
                       primary_release_year={primary_release_year}/>

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import {API_KEY_3, API_URL} from "../../api/api";
-
 class Year extends Component {
 
 

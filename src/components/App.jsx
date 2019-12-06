@@ -47,11 +47,12 @@ export default class App extends React.Component {
     };
 
     changeTotalPages = page => {
-        this.setState(state => ({
-            total_pages: page,
-        }));
 
-        //console.log(page);
+        if(page !== this.state.total_pages){
+            this.setState(state => ({
+                total_pages: page,
+            }));
+        }
     };
 
     onChangePage = page => {
