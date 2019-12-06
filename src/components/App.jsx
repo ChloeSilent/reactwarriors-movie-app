@@ -76,8 +76,8 @@ export default class App extends React.Component {
             let remove = this.state.updatedGenres.indexOf(event.target.value);
             this.setState({
                     updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
-                },
-                ()=>{console.log('updatedGenres', this.state.updatedGenres);}
+                }
+
             );
         }
 
@@ -113,7 +113,6 @@ export default class App extends React.Component {
                                     page={this.state.page}
                                     onChangePage={this.onChangePage}
                                     primary_release_year={this.state.primary_release_year}
-                                    onChangePage={this.onChangePage}
                                     changeTotalPages={this.changeTotalPages}
                                     updatedGenres={this.state.updatedGenres}
                         />

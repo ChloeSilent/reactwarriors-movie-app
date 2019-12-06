@@ -31,6 +31,8 @@ class Year extends Component {
                         onChange={this.props.onChangePrimaryReleaseYears}
                         name="primary_release_year"
                 >
+                    <option
+                            value={false}>Не выбрано</option>
                     {options.map((option) => {
                         return <option key={option}
                                        value={option}>{option}</option>

@@ -4,6 +4,7 @@ import Year from "./Year";
 import TotalPages from "./TotalPages"
 
 import Genres from "./Genres";
+import Pagination from "./Pagination";
 
 export default class Filters extends React.Component {
 
@@ -28,23 +29,7 @@ export default class Filters extends React.Component {
             <form className="mb-3">
                 <SortBy onChangeFilters={onChangeFilters}
                         sort_by={sort_by}/>
-                <div className="btn-group mb-3 pagination">
-                    <button
-                        type="button"
-                        className="btn btn-light"
-                        disabled={page === 1}
-                        onClick={onChangePage.bind(null, page - 1)}
-                    >
-                        Назад
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-light"
-                        onClick={onChangePage.bind(null, page + 1)}
-                    >
-                        Вперед
-                    </button>
-                </div>
+                <Pagination onChangePage={onChangePage} page={page}/>
                 <TotalPages total_pages={total_pages}/>
 
                 <Year onChangePrimaryReleaseYears={onChangePrimaryReleaseYears}

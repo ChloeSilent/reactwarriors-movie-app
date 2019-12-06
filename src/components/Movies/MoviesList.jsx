@@ -48,8 +48,7 @@ export default class MovieList extends Component {
         if (this.props.page !== prevProps.page) {
             this.getMovies(this.props.filters, this.props.page, this.props.primary_release_year, this.props.updatedGenres);
         }
-        if (this.props.primary_release_year !== prevProps.primary_release_year && this.props.primary_release_year.length === 4) {
-
+        if (this.props.primary_release_year !== prevProps.primary_release_year) {
             this.getMovies(this.props.filters, this.props.page, this.props.primary_release_year, this.props.updatedGenres);
         }
 
