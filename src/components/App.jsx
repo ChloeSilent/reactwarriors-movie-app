@@ -69,12 +69,14 @@ export default class App extends React.Component {
         if (event.target.checked) {
             this.setState({
                 updatedGenres: [...this.state.updatedGenres, event.target.value]
-            });
+            })
+
         } else {
             let remove = this.state.updatedGenres.indexOf(event.target.value);
             this.setState({
                     updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
-                }
+                },
+                ()=>{console.log('updatedGenres', this.state.updatedGenres);}
             );
         }
 
@@ -100,6 +102,7 @@ export default class App extends React.Component {
                                          primary_release_year={this.state.primary_release_year}
                                          onReset={this.onReset}
                                          onCheckGenre={this.onCheckGenre}
+                                         updatedGenres={this.state.updatedGenres}
                                 />
                             </div>
                         </div>

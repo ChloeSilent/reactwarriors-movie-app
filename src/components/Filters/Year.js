@@ -7,8 +7,8 @@ class Year extends Component {
 
     static defaultProps = {
         releaseYears: {
-            from: 1900,
-            to: new Date().getFullYear()
+            from: 1950,
+            to: 2025
         },
         options: []
     };
