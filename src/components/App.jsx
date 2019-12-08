@@ -23,41 +23,45 @@ export default class App extends React.Component {
 
     onChangeFilters = event => {
         const {name, value} = event.target;
+        console.log("1", this.state.filters.with_genres);
 
         if (event.target.name === "with_genres") {
-            console.log(this.state.with_genres);
+            const newList = this.state.filters.with_genres;
+
             if (event.target.checked) {
-                console.log("checked");
+
+                newList.push(event.target.value);
                 this.setState(state => ({
+                        filters: {
+                            ...state.filters,
+                            [name]: newList
+                        }
+                    })
+                );
+            } else {
+                this.setState(state => ({
+                        filters: {
+                            ...state.filters,
+                            [name]: this.state.filters.with_genres.filter(genre => genre !== event.target.value)
+                        }
+                    })
+                );
+            }
+
+
+        } else {
+            this.setState(state => ({
                     filters: {
                         ...state.filters,
                         [name]: [value]
                     }
-                }))
-            } else {
-                // this.setState(state => ({
-                //     filters: {
-                //         with_genres: this.state.with_genres.filter((genre) => genre !== event.target.value)
-                //     }
-                // }));
-                this.setState(prevState => ({
-                    filters: {
-                        with_genres: [event.target.value, ...prevState.filters.with_genres]
-                    }
-                }))
-            }
+                })
+            );
         }
-        console.log("with_genres: ", this.state.filters.with_genres);
 
-        this.setState(state => ({
-                filters: {
-                    ...state.filters,
-                    [name]: [value]
-                }
-            })
-        )
-    }
 
+        console.log("2", this.state.filters.with_genres);
+    };
 
 
     onChangeTotalPages = page => {
@@ -76,32 +80,9 @@ export default class App extends React.Component {
     };
 
     onReset = event => {
-        event.preventDefault()
+        event.preventDefault();
         this.setState({...initialState})
     };
-
-    // onCheckGenre = event => {
-    //
-    //     if (event.target.checked) {
-    //         this.setState({
-    //             filters: {
-    //                 updatedGenres: [...this.state.filters.updatedGenres, event.target.value]
-    //             }
-    //         })
-    //
-    //     } else {
-    //         let remove = this.state.filters.updatedGenres.indexOf(event.target.value);
-    //         this.setState({
-    //             filters: {
-    //                 updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
-    //             }
-    //             }
-    //
-    //         );
-    //     }
-    //
-    // };
-
 
     render() {
         const {filters} = this.state;
