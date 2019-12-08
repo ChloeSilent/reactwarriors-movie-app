@@ -17,7 +17,7 @@ export default class MovieList extends Component {
         const year = primary_release_year ? `&primary_release_year=${primary_release_year} ` : "";
         const genre = with_genres.length > 0? `&with_genres=${with_genres.join('%2C%20')}` : "";
         const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}${year}${genre}`;
-        console.log(link);
+        //console.log(link);
         fetch(link)
             .then(response => {
 
@@ -40,7 +40,7 @@ export default class MovieList extends Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("genres update", this.props.filters, prevProps.filters);
+        //console.log("genres update", this.props.filters, prevProps.filters);
         if (this.props.filters.sort_by !== prevProps.filters.sort_by) {
             this.getMovies(this.props.filters, 1);
             this.props.onChangePage(1);

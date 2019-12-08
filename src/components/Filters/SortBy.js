@@ -34,13 +34,13 @@ export default class SortBy extends React.Component {
             options,
         } = this.props;
 
-
         return (
+
             <div className="form-group row">
                 <label htmlFor="sort_by">Сортировать по:</label>
                 <select className="form-control"
                         id="sort_by"
-                        value={sort_by}
+                        value={sort_by[0]}
                         onChange={onChangeFilters}
                         name="sort_by"
                 >

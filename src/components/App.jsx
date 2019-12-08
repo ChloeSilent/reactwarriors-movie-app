@@ -26,23 +26,25 @@ export default class App extends React.Component {
         console.log("1", this.state.filters.with_genres);
 
         if (event.target.name === "with_genres") {
-            const newList = this.state.filters.with_genres;
 
+            console.log("this.state.filters.with_genres", [...this.state.filters.with_genres]);
             if (event.target.checked) {
 
-                newList.push(event.target.value);
+                this.setState(state => ({
+                        filters: {
+                            ...state.filters,
+                            [name]:[...state.filters.with_genres, value]
+                        }
+                    })
+
+                );
+            } else {
+                const newList = this.state.filters.with_genres.filter(genre => genre !== event.target.value);
+                console.log("newList", newList);
                 this.setState(state => ({
                         filters: {
                             ...state.filters,
                             [name]: newList
-                        }
-                    })
-                );
-            } else {
-                this.setState(state => ({
-                        filters: {
-                            ...state.filters,
-                            [name]: this.state.filters.with_genres.filter(genre => genre !== event.target.value)
                         }
                     })
                 );
