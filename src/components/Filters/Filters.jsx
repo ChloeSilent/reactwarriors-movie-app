@@ -12,7 +12,7 @@ export default class Filters extends React.Component {
 
 
         const {
-            filters: {sort_by, primary_release_year,updatedGenres},
+            filters: {sort_by, primary_release_year},
             onChangeFilters,
             onChangePage,
             page,

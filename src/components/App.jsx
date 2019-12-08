@@ -6,7 +6,7 @@ const initialState = {
     filters: {
         sort_by: ["popularity.desc"],
         primary_release_year: new Date().getFullYear(),
-        updatedGenres: []
+        with_genres: []
     },
     page: 1,
     total_pages: "",
@@ -24,24 +24,30 @@ export default class App extends React.Component {
     onChangeFilters = event => {
         const {name, value} = event.target;
 
-        if(event.target.name === "with_genres"){
-            // if (event.target.checked) {
-            //     this.setState(prevState => ({
-            //         filters: newFilters
-            //     }))
-            //
-            // } else {
-            //     let remove = this.state.filters.updatedGenres.indexOf(event.target.value);
-            //     this.setState({
-            //             filters: {
-            //                 updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
-            //             }});
-            //     this.setState(prevState => ({
-            //         filters: newFilters
-            //     }))
-            // }
-            console.log(event.target.id);
+        if (event.target.name === "with_genres") {
+            console.log(this.state.with_genres);
+            if (event.target.checked) {
+                console.log("checked");
+                this.setState(state => ({
+                    filters: {
+                        ...state.filters,
+                        [name]: [value]
+                    }
+                }))
+            } else {
+                // this.setState(state => ({
+                //     filters: {
+                //         with_genres: this.state.with_genres.filter((genre) => genre !== event.target.value)
+                //     }
+                // }));
+                this.setState(prevState => ({
+                    filters: {
+                        with_genres: [event.target.value, ...prevState.filters.with_genres]
+                    }
+                }))
+            }
         }
+        console.log("with_genres: ", this.state.filters.with_genres);
 
         this.setState(state => ({
                 filters: {
@@ -50,12 +56,13 @@ export default class App extends React.Component {
                 }
             })
         )
-    };
+    }
 
 
-    changeTotalPages = page => {
 
-        if(page !== this.state.total_pages){
+    onChangeTotalPages = page => {
+
+        if (page !== this.state.total_pages) {
             this.setState(state => ({
                 total_pages: page,
             }));
@@ -113,7 +120,7 @@ export default class App extends React.Component {
                                          onChangePage={this.onChangePage}
                                          primary_release_year={this.state.filters.primary_release_year}
                                          onReset={this.onReset}
-                                         updatedGenres={this.state.filters.updatedGenres}
+                                         with_genres={this.state.filters.with_genres}
                                 />
                             </div>
                         </div>
@@ -123,8 +130,8 @@ export default class App extends React.Component {
                                     page={this.state.page}
                                     onChangePage={this.onChangePage}
                                     primary_release_year={this.state.filters.primary_release_year}
-                                    changeTotalPages={this.changeTotalPages}
-                                    updatedGenres={this.state.filters.updatedGenres}
+                                    onChangeTotalPages={this.onChangeTotalPages}
+                                    with_genres={this.state.filters.with_genres}
                         />
                     </div>
                 </div>
