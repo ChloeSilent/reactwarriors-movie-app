@@ -34,19 +34,21 @@ class Genres extends Component {
         const genres = this.state.genres;
 
         const {
-            onCheckGenre
+            onChangeFilters
         } = this.props;
 
 
         return (
-            <div className="mb-3">
+            <div className="form-group mb-3">
+                <span>Выберите жанр</span>
                 {genres.map(genre => {
                     return <div className="form-check"
                                 key={genre.id}>
                         <input className="form-check-input"
                                type="checkbox" id={genre.id}
                                value={genre.id}
-                               onChange={onCheckGenre}
+                               onChange={onChangeFilters}
+                               name="with_genres"
                         />
                         <label className="form-check-label" htmlFor={genre.id}>{genre.name}</label>
                     </div>

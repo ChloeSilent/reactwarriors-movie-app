@@ -12,36 +12,35 @@ export default class Filters extends React.Component {
 
 
         const {
-            filters: {sort_by},
+            filters: {sort_by, primary_release_year,updatedGenres},
             onChangeFilters,
             onChangePage,
             page,
             total_pages,
-            onChangePrimaryReleaseYears,
-            primary_release_year,
             onReset,
-            onCheckGenre
         } = this.props;
 
 
         return (
 
             <form className="mb-3">
-                <SortBy onChangeFilters={onChangeFilters}
-                        sort_by={sort_by}/>
-                <Pagination onChangePage={onChangePage} page={page}/>
-                <TotalPages total_pages={total_pages}/>
-
-                <Year onChangePrimaryReleaseYears={onChangePrimaryReleaseYears}
-                      primary_release_year={primary_release_year}/>
-
-                <Genres onCheckGenre={onCheckGenre}/>
-
                 <button type="button"
                         className="btn btn-outline-secondary"
                         onClick={onReset}
                 >Сбросить фильтры
                 </button>
+                <SortBy onChangeFilters={onChangeFilters}
+                        sort_by={sort_by}/>
+
+                <TotalPages total_pages={total_pages}/>
+
+                <Year onChangeFilters={onChangeFilters}
+                      primary_release_year={primary_release_year}/>
+
+                <Genres onChangeFilters={onChangeFilters}/>
+
+
+                <Pagination onChangePage={onChangePage} page={page}/>
             </form>
         )
     }

@@ -4,12 +4,13 @@ import MoviesList from "./Movies/MoviesList";
 
 const initialState = {
     filters: {
-        sort_by: ["popularity.desc"]
+        sort_by: ["popularity.desc"],
+        primary_release_year: new Date().getFullYear(),
+        updatedGenres: []
     },
     page: 1,
     total_pages: "",
-    primary_release_year: "",
-    updatedGenres: []
+
 };
 
 
@@ -20,31 +21,37 @@ export default class App extends React.Component {
         this.state = initialState;
     }
 
-    onChangeFilters = (event) => {
+    onChangeFilters = event => {
         const {name, value} = event.target;
-        const newFilters = {
-            ...this.state.filters,
-            [name]: [value]
-        };
 
-        this.setState(prevState => ({
-                filters: newFilters
+        if(event.target.name === "with_genres"){
+            // if (event.target.checked) {
+            //     this.setState(prevState => ({
+            //         filters: newFilters
+            //     }))
+            //
+            // } else {
+            //     let remove = this.state.filters.updatedGenres.indexOf(event.target.value);
+            //     this.setState({
+            //             filters: {
+            //                 updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
+            //             }});
+            //     this.setState(prevState => ({
+            //         filters: newFilters
+            //     }))
+            // }
+            console.log(event.target.id);
+        }
+
+        this.setState(state => ({
+                filters: {
+                    ...state.filters,
+                    [name]: [value]
+                }
             })
         )
     };
 
-    onChangePrimaryReleaseYears = (event) => {
-
-        const {name, value} = event.target;
-        const primary_release_year = {
-            [name]: value
-        };
-
-        this.setState(state => ({
-            primary_release_year: primary_release_year.primary_release_year,
-        }));
-
-    };
 
     changeTotalPages = page => {
 
@@ -66,22 +73,27 @@ export default class App extends React.Component {
         this.setState({...initialState})
     };
 
-    onCheckGenre = event => {
-        if (event.target.checked) {
-            this.setState({
-                updatedGenres: [...this.state.updatedGenres, event.target.value]
-            })
-
-        } else {
-            let remove = this.state.updatedGenres.indexOf(event.target.value);
-            this.setState({
-                    updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
-                }
-
-            );
-        }
-
-    };
+    // onCheckGenre = event => {
+    //
+    //     if (event.target.checked) {
+    //         this.setState({
+    //             filters: {
+    //                 updatedGenres: [...this.state.filters.updatedGenres, event.target.value]
+    //             }
+    //         })
+    //
+    //     } else {
+    //         let remove = this.state.filters.updatedGenres.indexOf(event.target.value);
+    //         this.setState({
+    //             filters: {
+    //                 updatedGenres: this.state.updatedGenres.filter((_, i) => i !== remove)
+    //             }
+    //             }
+    //
+    //         );
+    //     }
+    //
+    // };
 
 
     render() {
@@ -91,19 +103,17 @@ export default class App extends React.Component {
             <div className="container">
                 <div className="row mt-4">
                     <div className="col-4">
-                        <div className="card" style={{width: "100%"}}>
+                        <div className="card">
                             <div className="card-body">
                                 <h3>Фильтры:</h3>
-                                <Filters filters={filters}
+                                <Filters filters={this.state.filters}
                                          onChangeFilters={this.onChangeFilters}
                                          page={this.state.page}
                                          total_pages={this.state.total_pages}
                                          onChangePage={this.onChangePage}
-                                         onChangePrimaryReleaseYears={this.onChangePrimaryReleaseYears}
-                                         primary_release_year={this.state.primary_release_year}
+                                         primary_release_year={this.state.filters.primary_release_year}
                                          onReset={this.onReset}
-                                         onCheckGenre={this.onCheckGenre}
-                                         updatedGenres={this.state.updatedGenres}
+                                         updatedGenres={this.state.filters.updatedGenres}
                                 />
                             </div>
                         </div>
@@ -112,9 +122,9 @@ export default class App extends React.Component {
                         <MoviesList filters={filters}
                                     page={this.state.page}
                                     onChangePage={this.onChangePage}
-                                    primary_release_year={this.state.primary_release_year}
+                                    primary_release_year={this.state.filters.primary_release_year}
                                     changeTotalPages={this.changeTotalPages}
-                                    updatedGenres={this.state.updatedGenres}
+                                    updatedGenres={this.state.filters.updatedGenres}
                         />
                     </div>
                 </div>

@@ -1,3 +1,32 @@
-body {
-  background: #fdfdfd; 
+.form-group {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+.form-group--total_pages {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group span {
+    margin-bottom: .5rem;
+    display: block;
+}
+
+.btn {
+    width: 100%;
+}
+
+.btn_total_pages {
+    width: 60%;
+}
+
+.total_pages-counter {
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+
 }

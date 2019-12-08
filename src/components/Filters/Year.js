@@ -4,16 +4,17 @@ class Year extends Component {
 
 
     static defaultProps = {
-        releaseYears: {
+        rangeReleaseYears: {
             from: 1950,
             to: 2025
         },
         options: []
     };
 
+
     getOptions = () => {
         let opt = [];
-        for (let i = this.props.releaseYears.from; i <= this.props.releaseYears.to; i++) {
+        for (let i = this.props.rangeReleaseYears.from; i <= this.props.rangeReleaseYears.to; i++) {
             opt.push(i);
         }
         return opt;
@@ -22,17 +23,20 @@ class Year extends Component {
 
     render() {
         const options = this.getOptions();
+        const {primary_release_year,
+            onChangeFilters,
+        } = this.props;
 
         return (
             <div className="form-group row">
                 <label htmlFor="sort_by">Сортировать по:</label>
                 <select className="form-control"
-                        value={this.props.primary_release_year}
-                        onChange={this.props.onChangePrimaryReleaseYears}
+                        value={primary_release_year}
+                        onChange={onChangeFilters}
                         name="primary_release_year"
                 >
                     <option
-                            value={false}>Не выбрано</option>
+                            value={false}>{this.props.releaseYears}</option>
                     {options.map((option) => {
                         return <option key={option}
                                        value={option}>{option}</option>

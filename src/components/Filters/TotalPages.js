@@ -10,9 +10,9 @@ class TotalPages extends Component {
 
 
         return (
-            <div className="row">
-                <span className="btn">Всего страниц</span>
-                <span className="btn">{total_pages}</span>
+            <div className="form-group form-group--total_pages">
+                <span className="btn_total_pages">Всего страниц</span>
+                <span className="total_pages-counter">{total_pages}</span>
             </div>
         );
 
