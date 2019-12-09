@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import MovieItem from "./MovieItem";
 import {API_URL, API_KEY_3} from "../../api/api";
 import queryString from 'query-string'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
 
 export default class MovieList extends Component {
     constructor() {
@@ -69,8 +71,23 @@ export default class MovieList extends Component {
 
     render() {
         const {movies} = this.state;
+        const style = {
+            position: 'absolute',
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)"
+        };
         return (
             <div className="row">
+                <Loader
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={100}
+                    width={100}
+                    timeout={5000}
+                    style={style}
+
+                />
                 {movies.map(movie => {
                     return (
                         <div key={movie.id} className="col-6 mb-4">
