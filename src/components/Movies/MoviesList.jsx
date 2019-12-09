@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import MovieItem from "./MovieItem";
 import {API_URL, API_KEY_3} from "../../api/api";
+import queryString from 'query-string'
 
 export default class MovieList extends Component {
     constructor() {
@@ -14,10 +15,18 @@ export default class MovieList extends Component {
 
     getMovies = (filters, page) => {
         const {sort_by, primary_release_year, with_genres} = filters;
-        const year = primary_release_year ? `&primary_release_year=${primary_release_year} ` : "";
-        const genre = with_genres.length > 0? `&with_genres=${with_genres.join('%2C%20')}` : "";
-        const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}${year}${genre}`;
+        const queryStringParams = {
+            api_key: API_KEY_3,
+            language: "ru-RU",
+            sort_by: sort_by,
+            page: page,
+            year: primary_release_year,
+            with_genres: with_genres,
 
+        };
+        const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`;
+
+        console.log(link);
         fetch(link)
             .then(response => {
 

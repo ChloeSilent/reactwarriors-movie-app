@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export default class SortBy extends React.Component {
     static propTypes = {
         onChangeFilters: PropTypes.func.isRequired,
-        sort_by: PropTypes.array.isRequired,
+        sort_by: PropTypes.string.isRequired
     };
 
     static defaultProps = {
@@ -40,7 +40,7 @@ export default class SortBy extends React.Component {
                 <label htmlFor="sort_by">Сортировать по:</label>
                 <select className="form-control"
                         id="sort_by"
-                        value={sort_by[0]}
+                        value={sort_by}
                         onChange={onChangeFilters}
                         name="sort_by"
                 >

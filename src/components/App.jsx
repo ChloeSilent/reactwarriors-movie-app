@@ -4,7 +4,7 @@ import MoviesList from "./Movies/MoviesList";
 
 const initialState = {
     filters: {
-        sort_by: ["popularity.desc"],
+        sort_by: "popularity.desc",
         primary_release_year: new Date().getFullYear(),
         with_genres: []
     },
@@ -22,15 +22,14 @@ export default class App extends React.Component {
     }
 
     onChangeFilters = event => {
-        const {name, value} = event.target;
-        this.setState(state => ({
-                filters: {
-                    ...state.filters,
-                    [name]: [value]
-                }
-            })
-        );
-
+        const value = event.target.value;
+        const name = event.target.name;
+        this.setState(prevState => ({
+            filters: {
+                ...prevState.filters,
+                [name]: value
+            }
+        }));
     };
 
 
@@ -54,19 +53,17 @@ export default class App extends React.Component {
     };
 
     onChangePage = page => {
+        console.log(page);
+        const {name, value} = page;
         this.setState({
-            page
+            [name] : [value]
         });
     };
-
-    // resetChilderenState = () => {
-    //
-    // };
 
     onReset = event => {
         event.preventDefault();
         this.setState({...initialState})
-        //resetChilderenState();
+
     };
 
     render() {

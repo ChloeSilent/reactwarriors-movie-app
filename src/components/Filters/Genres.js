@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {API_KEY_3, API_URL} from "../../api/api";
 
-const initialState = {
-    all_genres: [],
-    selected_genres: []
-};
+// const initialState = {
+//     all_genres: [],
+//     selected_genres: []
+// };
 
 
 class Genres extends Component {
