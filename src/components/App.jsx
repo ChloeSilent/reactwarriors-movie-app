@@ -59,14 +59,14 @@ export default class App extends React.Component {
         });
     };
 
-    resetChilderenState = () => {
-
-    };
+    // resetChilderenState = () => {
+    //
+    // };
 
     onReset = event => {
         event.preventDefault();
         this.setState({...initialState})
-        resetChilderenState();
+        //resetChilderenState();
     };
 
     render() {
