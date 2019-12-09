@@ -23,51 +23,29 @@ export default class App extends React.Component {
 
     onChangeFilters = event => {
         const {name, value} = event.target;
-        console.log("1", this.state.filters.with_genres);
+        this.setState(state => ({
+                filters: {
+                    ...state.filters,
+                    [name]: [value]
+                }
+            })
+        );
 
-        if (event.target.name === "with_genres") {
-
-            console.log("this.state.filters.with_genres", [...this.state.filters.with_genres]);
-            if (event.target.checked) {
-
-                this.setState(state => ({
-                        filters: {
-                            ...state.filters,
-                            [name]:[...state.filters.with_genres, value]
-                        }
-                    })
-
-                );
-            } else {
-                const newList = this.state.filters.with_genres.filter(genre => genre !== event.target.value);
-                console.log("newList", newList);
-                this.setState(state => ({
-                        filters: {
-                            ...state.filters,
-                            [name]: newList
-                        }
-                    })
-                );
-            }
+    };
 
 
-        } else {
-            this.setState(state => ({
-                    filters: {
-                        ...state.filters,
-                        [name]: [value]
-                    }
-                })
-            );
-        }
-
-
-        console.log("2", this.state.filters.with_genres);
+    onChangeGenres = (list) => {
+        this.setState(state => ({
+                filters: {
+                    ...state.filters,
+                    with_genres: list
+                }
+            })
+        );
     };
 
 
     onChangeTotalPages = page => {
-
         if (page !== this.state.total_pages) {
             this.setState(state => ({
                 total_pages: page,
@@ -81,9 +59,14 @@ export default class App extends React.Component {
         });
     };
 
+    resetChilderenState = () => {
+
+    };
+
     onReset = event => {
         event.preventDefault();
         this.setState({...initialState})
+        resetChilderenState();
     };
 
     render() {
@@ -104,6 +87,7 @@ export default class App extends React.Component {
                                          primary_release_year={this.state.filters.primary_release_year}
                                          onReset={this.onReset}
                                          with_genres={this.state.filters.with_genres}
+                                         onChangeGenres={this.onChangeGenres}
                                 />
                             </div>
                         </div>

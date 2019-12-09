@@ -12,12 +12,13 @@ export default class Filters extends React.Component {
 
 
         const {
-            filters: {sort_by, primary_release_year},
+            filters: {sort_by, primary_release_year, with_genres},
             onChangeFilters,
             onChangePage,
             page,
             total_pages,
             onReset,
+            onChangeGenres
         } = this.props;
 
 
@@ -37,7 +38,9 @@ export default class Filters extends React.Component {
                 <Year onChangeFilters={onChangeFilters}
                       primary_release_year={primary_release_year}/>
 
-                <Genres onChangeFilters={onChangeFilters}/>
+                <Genres onChangeFilters={onChangeFilters}
+                        with_genres={with_genres}
+                        onChangeGenres={onChangeGenres}/>
 
 
                 <Pagination onChangePage={onChangePage} page={page}/>
