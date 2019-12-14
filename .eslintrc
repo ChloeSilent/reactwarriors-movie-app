@@ -11,5 +11,7 @@
   },
   "plugins": [
     "prettier"
-  ]
+  ],
+
+  "globals": { "_": true }
 }

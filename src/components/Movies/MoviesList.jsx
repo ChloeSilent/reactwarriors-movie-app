@@ -4,6 +4,8 @@ import {API_URL, API_KEY_3} from "../../api/api";
 import queryString from 'query-string'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
+import _ from "lodash";
+
 
 export default class MovieList extends Component {
     constructor() {
@@ -16,6 +18,7 @@ export default class MovieList extends Component {
 
 
     getMovies = (filters, page) => {
+        //console.log("getMovies ", page);
         const {sort_by, primary_release_year, with_genres} = filters;
         const queryStringParams = {
             api_key: API_KEY_3,
@@ -51,20 +54,9 @@ export default class MovieList extends Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.filters.sort_by !== prevProps.filters.sort_by) {
-            this.getMovies(this.props.filters, 1);
-            this.props.onChangePage(1);
-        }
-        if (this.props.page !== prevProps.page) {
+        if (!_.isEqual(this.props.filters, prevProps.filters) || !_.isEqual(this.props.page, prevProps.page)) {
+            console.log("componentDidUpdate ", this.props.filters, prevProps.filters);
             this.getMovies(this.props.filters, this.props.page);
-        }
-        if (this.props.primary_release_year !== prevProps.primary_release_year) {
-            this.getMovies(this.props.filters, this.props.page);
-        }
-
-        if (this.props.filters.with_genres !== prevProps.filters.with_genres) {
-            this.getMovies(this.props.filters, this.props.page);
-
         }
     }
 
