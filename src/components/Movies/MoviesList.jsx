@@ -6,6 +6,12 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 import _ from "lodash";
 
+const style = {
+    position: 'absolute',
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
+};
 
 export default class MovieList extends Component {
     constructor() {
@@ -13,12 +19,13 @@ export default class MovieList extends Component {
 
         this.state = {
             movies: [],
+            isLoading: false
         };
     }
 
 
     getMovies = (filters, page) => {
-        //console.log("getMovies ", page);
+
         const {sort_by, primary_release_year, with_genres} = filters;
         const queryStringParams = {
             api_key: API_KEY_3,
@@ -30,8 +37,10 @@ export default class MovieList extends Component {
 
         };
         const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`;
+        this.setState({
+            isLoading: true
+        });
 
-        console.log(link);
         fetch(link)
             .then(response => {
 
@@ -41,6 +50,7 @@ export default class MovieList extends Component {
 
                 this.setState({
                     movies: data.results,
+                    isLoading: false
                 });
 
                 this.props.onChangeTotalPages(data.total_pages);
@@ -49,29 +59,23 @@ export default class MovieList extends Component {
 
 
     componentDidMount() {
-        this.getMovies(this.props.filters);
+        this.getMovies(this.props.filters, this.props.page);
     }
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!_.isEqual(this.props.filters, prevProps.filters) || !_.isEqual(this.props.page, prevProps.page)) {
-            console.log("componentDidUpdate ", this.props.filters, prevProps.filters);
+
             this.getMovies(this.props.filters, this.props.page);
         }
     }
 
 
     render() {
-        const {movies} = this.state;
-        const style = {
-            position: 'absolute',
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)"
-        };
+        const {movies, isLoading} = this.state;
         return (
             <div className="row">
-                <Loader
+                {isLoading ? <Loader
                     type="ThreeDots"
                     color="#00BFFF"
                     height={100}
@@ -79,14 +83,14 @@ export default class MovieList extends Component {
                     timeout={5000}
                     style={style}
 
-                />
-                {movies.map(movie => {
+                /> : movies.map(movie => {
                     return (
                         <div key={movie.id} className="col-6 mb-4">
                             <MovieItem item={movie}/>
                         </div>
                     );
-                })}
+                })
+                }
             </div>
         );
     }

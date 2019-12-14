@@ -33,14 +33,51 @@ export default class App extends React.Component {
     };
 
 
-    onChangeGenres = (list) => {
+    onChangeGenres = (genre) => {
+        // if (this.state.filters.with_genres.includes(genre)) {
+        //
+        //     const filtered = this.state.filters.with_genres.filter(function (value, index, arr) {
+        //         return value !== genre;
+        //     });
+        //
+        //
+        //     this.setState(state => ({
+        //             filters: {
+        //                 ...state.filters,
+        //                 with_genres: [...filtered]
+        //             }
+        //         })
+        //     );
+        // } else {
+        //     this.setState(state => ({
+        //             filters: {
+        //                 ...state.filters,
+        //                 with_genres: [...this.state.filters.with_genres, genre]
+        //             }
+        //         })
+        //     );
+        // }
+        let filtered;
+        if (this.state.filters.with_genres.includes(genre)) {
+
+            filtered = this.state.filters.with_genres.filter(function (value, index, arr) {
+                return value !== genre;
+            });
+
+        } else {
+
+            filtered = [...this.state.filters.with_genres, genre]
+
+        }
+
         this.setState(state => ({
                 filters: {
                     ...state.filters,
-                    with_genres: list
+                    with_genres: [...filtered]
                 }
             })
         );
+
     };
 
 
@@ -53,10 +90,9 @@ export default class App extends React.Component {
     };
 
     onChangePage = page => {
-        console.log(page);
         const {name, value} = page;
         this.setState({
-            [name] : [value]
+            [name]: [value]
         });
     };
 
@@ -81,9 +117,7 @@ export default class App extends React.Component {
                                          page={this.state.page}
                                          total_pages={this.state.total_pages}
                                          onChangePage={this.onChangePage}
-                                         primary_release_year={this.state.filters.primary_release_year}
                                          onReset={this.onReset}
-                                         with_genres={this.state.filters.with_genres}
                                          onChangeGenres={this.onChangeGenres}
                                 />
                             </div>
