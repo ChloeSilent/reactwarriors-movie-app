@@ -34,40 +34,15 @@ export default class App extends React.Component {
 
 
     onChangeGenres = (genre) => {
-        // if (this.state.filters.with_genres.includes(genre)) {
-        //
-        //     const filtered = this.state.filters.with_genres.filter(function (value, index, arr) {
-        //         return value !== genre;
-        //     });
-        //
-        //
-        //     this.setState(state => ({
-        //             filters: {
-        //                 ...state.filters,
-        //                 with_genres: [...filtered]
-        //             }
-        //         })
-        //     );
-        // } else {
-        //     this.setState(state => ({
-        //             filters: {
-        //                 ...state.filters,
-        //                 with_genres: [...this.state.filters.with_genres, genre]
-        //             }
-        //         })
-        //     );
-        // }
-        let filtered;
-        if (this.state.filters.with_genres.includes(genre)) {
 
+        let filtered;
+
+        if (this.state.filters.with_genres.includes(genre)) {
             filtered = this.state.filters.with_genres.filter(function (value, index, arr) {
                 return value !== genre;
             });
-
         } else {
-
             filtered = [...this.state.filters.with_genres, genre]
-
         }
 
         this.setState(state => ({
@@ -81,18 +56,17 @@ export default class App extends React.Component {
     };
 
 
-    onChangeTotalPages = page => {
-        if (page !== this.state.total_pages) {
-            this.setState(state => ({
-                total_pages: page,
-            }));
-        }
+    onChangeTotalPages = total_pages => {
+        this.setState({
+            total_pages
+        });
     };
 
     onChangePage = page => {
-        const {name, value} = page;
+        console.log("page ", page);
+
         this.setState({
-            [name]: [value]
+            page
         });
     };
 

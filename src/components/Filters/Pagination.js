@@ -5,7 +5,7 @@ class Pagination extends Component {
 
     handleClick = (newPage) => () => {
 
-        this.props.onChangePage({name: "page", value: newPage})
+        this.props.onChangePage(newPage)
     };
 
     render() {
@@ -36,6 +36,7 @@ class Pagination extends Component {
                     <button
                         type="button"
                         className="btn btn-light"
+                        disabled={page === total_pages}
                         onClick={this.handleClick(Number(page) + 1)}
                     >
                         Вперед

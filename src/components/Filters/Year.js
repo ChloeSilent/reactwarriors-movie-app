@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
 
+
+const getYears = () => {
+    let opt = [];
+    for (let i = this.props.rangeReleaseYears.from; i <= this.props.rangeReleaseYears.to; i++) {
+        opt.push(i);
+    }
+    return opt;
+};
+
 class Year extends Component {
 
 
@@ -11,18 +20,8 @@ class Year extends Component {
         options: []
     };
 
-
-    getOptions = () => {
-        let opt = [];
-        for (let i = this.props.rangeReleaseYears.from; i <= this.props.rangeReleaseYears.to; i++) {
-            opt.push(i);
-        }
-        return opt;
-    };
-
-
     render() {
-        const options = this.getOptions();
+        const options = getYears();
         const {primary_release_year,
             onChangeFilters,
         } = this.props;
