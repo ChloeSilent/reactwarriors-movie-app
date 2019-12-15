@@ -63,7 +63,6 @@ export default class App extends React.Component {
     };
 
     onChangePage = page => {
-        console.log("page ", page);
 
         this.setState({
             page

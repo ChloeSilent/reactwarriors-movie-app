@@ -1,42 +1,38 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 
-
-const getYears = () => {
+const getYears = (from, to) => {
     let opt = [];
-    for (let i = this.props.rangeReleaseYears.from; i <= this.props.rangeReleaseYears.to; i++) {
+    for (let i = from; i <= to; i++) {
         opt.push(i);
     }
     return opt;
 };
 
-class Year extends Component {
+class PrimaryReleaseYear extends PureComponent {
 
 
     static defaultProps = {
-        rangeReleaseYears: {
-            from: 1950,
-            to: 2025
-        },
-        options: []
+        years: getYears(1950, 2025)
     };
 
     render() {
-        const options = getYears();
-        const {primary_release_year,
-            onChangeFilters,
+        const {
+            primary_release_year,
+            onChangeFilters, years
         } = this.props;
+
 
         return (
             <div className="form-group row">
-                <label htmlFor="sort_by">Сортировать по:</label>
+                <label htmlFor="sort_by">Год выпуска:</label>
                 <select className="form-control"
                         value={primary_release_year}
                         onChange={onChangeFilters}
                         name="primary_release_year"
                 >
                     <option
-                            value={false}>{this.props.releaseYears}</option>
-                    {options.map((option) => {
+                        value={false}>{this.props.releaseYears}</option>
+                    {years.map((option) => {
                         return <option key={option}
                                        value={option}>{option}</option>
                     })}
@@ -47,4 +43,4 @@ class Year extends Component {
     }
 }
 
-export default Year;
+export default PrimaryReleaseYear;

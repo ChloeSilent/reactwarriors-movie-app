@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {API_KEY_3, API_URL} from "../../api/api";
 
 
-class Genres extends Component {
+class Genres extends PureComponent {
     constructor() {
         super();
 
@@ -34,7 +34,6 @@ class Genres extends Component {
 
         const {genres} = this.state;
         const {with_genres, onChangeGenres} = this.props;
-
         return (
 
             <div className="form-group mb-3">

@@ -3,6 +3,7 @@ import React from "react";
 export default class MovieItem extends React.Component {
   render() {
     const { item } = this.props;
+
     return (
       <div className="card" style={{ width: "100%" }}>
         <img
