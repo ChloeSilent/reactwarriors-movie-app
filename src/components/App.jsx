@@ -1,7 +1,7 @@
 import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
-
+import Header from "./Header/Header";
 const initialState = {
     filters: {
         sort_by: "popularity.desc",
@@ -33,9 +33,6 @@ export default class App extends React.Component {
     };
 
 
-
-
-
     onChangeTotalPages = total_pages => {
         this.setState({
             total_pages
@@ -59,30 +56,33 @@ export default class App extends React.Component {
         const {filters} = this.state;
 
         return (
-            <div className="container">
-                <div className="row mt-4">
-                    <div className="col-4">
-                        <div className="card">
-                            <div className="card-body">
-                                <h3>Фильтры:</h3>
-                                <Filters filters={this.state.filters}
-                                         onChangeFilters={this.onChangeFilters}
-                                         page={this.state.page}
-                                         total_pages={this.state.total_pages}
-                                         onChangePage={this.onChangePage}
-                                         onReset={this.onReset}
-                                />
+            <div>
+                <Header/>
+                <div className="container">
+                    <div className="row mt-4">
+                        <div className="col-4">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h3>Фильтры:</h3>
+                                    <Filters filters={this.state.filters}
+                                             onChangeFilters={this.onChangeFilters}
+                                             page={this.state.page}
+                                             total_pages={this.state.total_pages}
+                                             onChangePage={this.onChangePage}
+                                             onReset={this.onReset}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-8">
-                        <MoviesList filters={filters}
-                                    page={this.state.page}
-                                    onChangePage={this.onChangePage}
-                                    primary_release_year={this.state.filters.primary_release_year}
-                                    onChangeTotalPages={this.onChangeTotalPages}
-                                    with_genres={this.state.filters.with_genres}
-                        />
+                        <div className="col-8">
+                            <MoviesList filters={filters}
+                                        page={this.state.page}
+                                        onChangePage={this.onChangePage}
+                                        primary_release_year={this.state.filters.primary_release_year}
+                                        onChangeTotalPages={this.onChangeTotalPages}
+                                        with_genres={this.state.filters.with_genres}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

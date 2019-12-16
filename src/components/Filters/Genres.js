@@ -63,7 +63,7 @@ class Genres extends PureComponent {
                             value={genre.id}
                             onChange={this.onChangeGenre}
                             name="with_genres"
-                            //checked={with_genres.includes(genre.id)}
+                            checked={with_genres.includes(genre.id.toString())}
                         />
                         <label className="form-check-label" htmlFor={genre.id}>{genre.name}</label>
                     </div>
