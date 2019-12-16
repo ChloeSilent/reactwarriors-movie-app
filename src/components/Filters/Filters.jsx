@@ -17,7 +17,6 @@ export default class Filters extends React.Component {
             page,
             total_pages,
             onReset,
-            onChangeGenres
         } = this.props;
 
 
@@ -34,8 +33,7 @@ export default class Filters extends React.Component {
                 <PrimaryReleaseYear onChangeFilters={onChangeFilters}
                       primary_release_year={primary_release_year}/>
                 <Genres onChangeFilters={onChangeFilters}
-                        with_genres={with_genres}
-                        onChangeGenres={onChangeGenres}/>
+                        with_genres={with_genres}/>
                 <Pagination onChangePage={onChangePage}
                             page={page}
                             total_pages={total_pages}/>

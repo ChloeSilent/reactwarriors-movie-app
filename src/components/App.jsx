@@ -33,27 +33,7 @@ export default class App extends React.Component {
     };
 
 
-    onChangeGenres = (genre) => {
 
-        let filtered;
-
-        if (this.state.filters.with_genres.includes(genre)) {
-            filtered = this.state.filters.with_genres.filter(function (value, index, arr) {
-                return value !== genre;
-            });
-        } else {
-            filtered = [...this.state.filters.with_genres, genre]
-        }
-
-        this.setState(state => ({
-                filters: {
-                    ...state.filters,
-                    with_genres: [...filtered]
-                }
-            })
-        );
-
-    };
 
 
     onChangeTotalPages = total_pages => {
@@ -91,7 +71,6 @@ export default class App extends React.Component {
                                          total_pages={this.state.total_pages}
                                          onChangePage={this.onChangePage}
                                          onReset={this.onReset}
-                                         onChangeGenres={this.onChangeGenres}
                                 />
                             </div>
                         </div>

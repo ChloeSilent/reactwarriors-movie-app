@@ -63,9 +63,12 @@ export default class MovieList extends Component {
     }
 
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!_.isEqual(this.props.filters, prevProps.filters) || !_.isEqual(this.props.page, prevProps.page)) {
-
+    componentDidUpdate(prevProps) {
+        if (!_.isEqual(this.props.filters, prevProps.filters)) {
+            this.getMovies(this.props.filters, 1);
+            this.props.onChangePage(1);
+        }
+        if (!_.isEqual(this.props.page, prevProps.page)) {
             this.getMovies(this.props.filters, this.props.page);
         }
     }
