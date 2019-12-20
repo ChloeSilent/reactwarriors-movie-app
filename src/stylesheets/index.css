@@ -30,3 +30,7 @@
     border-radius: .25rem;
 
 }
+
+.invalid-feedback {
+    display: block;
+}
