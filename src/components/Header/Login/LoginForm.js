@@ -1,4 +1,5 @@
 import React from "react";
+import {API_KEY_3, API_URL} from "../../../api/api";
 
 export default class LoginForm extends React.Component {
     state = {
@@ -7,27 +8,70 @@ export default class LoginForm extends React.Component {
         errors: {}
     };
 
+    // onChange = e => {
+    //     const name = e.target.name;
+    //     const value = e.target.value;
+    //     this.setState(prevState => ({
+    //         [name]: value,
+    //         errors: {
+    //             ...prevState.errors,
+    //             [name]: null
+    //         }
+    //     }));
+    // };
+
     onChange = e => {
-        this.setState({
-            [e.target.name]: [e.target.value]
-        });
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(prevState => ({
+            [name]: value,
+            errors: {
+                ...prevState.errors,
+                [name]: null
+            }
+        }));
     };
 
+
+
+    // handleBlur = () => {
+    //     console.log("BLUR");
+    //     const errors = this.validateFields();
+    //     if (Object.keys(errors).length > 0) {
+    //         console.log("Error");
+    //         this.setState(prevState => ({
+    //             errors: {
+    //                 ...prevState.errors,
+    //                 ...errors
+    //             }
+    //         }))
+    //     }
+    //
+    // };
     handleBlur = () => {
-        console.log("BLUR");
+        console.log("on blur");
         const errors = this.validateFields();
         if (Object.keys(errors).length > 0) {
-            console.log("Error");
             this.setState(prevState => ({
                 errors: {
                     ...prevState.errors,
                     ...errors
                 }
-            }))
+            }));
         }
-
     };
 
+
+
+    // validateFields = () => {
+    //     const errors = {};
+    //
+    //     if (this.state.username === "") {
+    //         errors.username = "Not empty";
+    //     }
+    //
+    //     return errors;
+    // };
     validateFields = () => {
         const errors = {};
 
@@ -38,17 +82,167 @@ export default class LoginForm extends React.Component {
         return errors;
     };
 
+    // onSubmit = async () => {
+    //     const fetchApi = (url, options = {}) => {
+    //         return new Promise((resolve, reject) => {
+    //             fetch(url, options)
+    //                 .then(response => {
+    //                     if (response.status < 400) {
+    //                         return response.json()
+    //                     } else {
+    //                         throw response;
+    //                     }
+    //                 }).then(data => {
+    //                 resolve(data)
+    //             }).catch(response => {
+    //                 response.json().then(
+    //                     error => {
+    //                         reject();
+    //                         console.log("error is ", error);
+    //                     }
+    //                 );
+    //             })
+    //         });
+    //     };
+    //
+    //     try {
+    //         const data = await fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`);
+    //         const result = await fetchApi(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
+    //             {
+    //                 method: "POST",
+    //                 mode: "cors",
+    //                 "headers": {
+    //                     "Content-type": "application/json"
+    //                 },
+    //                 body: JSON.stringify(
+    //                     {
+    //                         username: this.state.username,
+    //                         password: this.state.password,
+    //                         request_token: data.request_token
+    //                     })
+    //             }
+    //         );
+    //
+    //         const {session_id} = await fetchApi(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
+    //             {
+    //                 method: "POST",
+    //                 mode: "cors",
+    //                 "headers": {
+    //                     "Content-type": "application/json"
+    //                 },
+    //                 body: JSON.stringify({
+    //                     request_token: result.request_token
+    //                 })
+    //             }
+    //         );
+    //         console.log("session_id ", session_id);
+    //     } catch (error) {
+    //         console.log("error ", error)
+    //     }
+    // };
+
+    onSubmit = () => {
+        const fetchApi = (url, options = {}) => {
+            return new Promise((resolve, reject) => {
+                fetch(url, options)
+                    .then(response => {
+                        if (response.status < 400) {
+                            return response.json();
+                        } else {
+                            throw response;
+                        }
+                    })
+                    .then(data => {
+                        resolve(data);
+                    })
+                    .catch(response => {
+                        response.json().then(error => {
+                            reject(error);
+                        });
+                    });
+            });
+        };
+        this.setState({
+            submitting: true
+        });
+        fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+            .then(data => {
+                return fetchApi(
+                    `${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
+                    {
+                        method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Content-type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            username: this.state.username,
+                            password: this.state.password,
+                            request_token: data.request_token
+                        })
+                    }
+                );
+            })
+            .then(data => {
+                return fetchApi(
+                    `${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
+                    {
+                        method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Content-type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            request_token: data.request_token
+                        })
+                    }
+                );
+            })
+            .then(data => {
+                console.log("session", data);
+                this.setState({
+                    submitting: false
+                });
+            })
+            .catch(error => {
+                console.log("error", error);
+                this.setState({
+                    submitting: false,
+                    errors: {
+                        base: error.status_message
+                    }
+                });
+            });
+    };
+
+    // onLogin = e => {
+    //     e.preventDefault();
+    //     const errors = this.validateFields();
+    //     if (Object.keys(errors).length > 0) {
+    //         console.log("Error");
+    //         this.setState(prevState => ({
+    //             errors: {
+    //                 ...prevState.errors,
+    //                 ...errors
+    //             }
+    //         }))
+    //     } else {
+    //         this.onSubmit()
+    //     }
+    // };
+
     onLogin = e => {
         e.preventDefault();
         const errors = this.validateFields();
         if (Object.keys(errors).length > 0) {
-            console.log("Error");
             this.setState(prevState => ({
                 errors: {
                     ...prevState.errors,
                     ...errors
                 }
-            }))
+            }));
+        } else {
+            this.onSubmit();
         }
     };
 
