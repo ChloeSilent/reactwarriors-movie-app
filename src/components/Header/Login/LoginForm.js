@@ -5,20 +5,10 @@ export default class LoginForm extends React.Component {
     state = {
         username: "",
         password: "",
-        errors: {}
+        errors: {},
+        submitting: false
     };
 
-    // onChange = e => {
-    //     const name = e.target.name;
-    //     const value = e.target.value;
-    //     this.setState(prevState => ({
-    //         [name]: value,
-    //         errors: {
-    //             ...prevState.errors,
-    //             [name]: null
-    //         }
-    //     }));
-    // };
 
     onChange = e => {
         const name = e.target.name;
@@ -33,21 +23,6 @@ export default class LoginForm extends React.Component {
     };
 
 
-
-    // handleBlur = () => {
-    //     console.log("BLUR");
-    //     const errors = this.validateFields();
-    //     if (Object.keys(errors).length > 0) {
-    //         console.log("Error");
-    //         this.setState(prevState => ({
-    //             errors: {
-    //                 ...prevState.errors,
-    //                 ...errors
-    //             }
-    //         }))
-    //     }
-    //
-    // };
     handleBlur = () => {
         console.log("on blur");
         const errors = this.validateFields();
@@ -61,17 +36,6 @@ export default class LoginForm extends React.Component {
         }
     };
 
-
-
-    // validateFields = () => {
-    //     const errors = {};
-    //
-    //     if (this.state.username === "") {
-    //         errors.username = "Not empty";
-    //     }
-    //
-    //     return errors;
-    // };
     validateFields = () => {
         const errors = {};
 
@@ -82,66 +46,10 @@ export default class LoginForm extends React.Component {
         return errors;
     };
 
-    // onSubmit = async () => {
-    //     const fetchApi = (url, options = {}) => {
-    //         return new Promise((resolve, reject) => {
-    //             fetch(url, options)
-    //                 .then(response => {
-    //                     if (response.status < 400) {
-    //                         return response.json()
-    //                     } else {
-    //                         throw response;
-    //                     }
-    //                 }).then(data => {
-    //                 resolve(data)
-    //             }).catch(response => {
-    //                 response.json().then(
-    //                     error => {
-    //                         reject();
-    //                         console.log("error is ", error);
-    //                     }
-    //                 );
-    //             })
-    //         });
-    //     };
-    //
-    //     try {
-    //         const data = await fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`);
-    //         const result = await fetchApi(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
-    //             {
-    //                 method: "POST",
-    //                 mode: "cors",
-    //                 "headers": {
-    //                     "Content-type": "application/json"
-    //                 },
-    //                 body: JSON.stringify(
-    //                     {
-    //                         username: this.state.username,
-    //                         password: this.state.password,
-    //                         request_token: data.request_token
-    //                     })
-    //             }
-    //         );
-    //
-    //         const {session_id} = await fetchApi(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
-    //             {
-    //                 method: "POST",
-    //                 mode: "cors",
-    //                 "headers": {
-    //                     "Content-type": "application/json"
-    //                 },
-    //                 body: JSON.stringify({
-    //                     request_token: result.request_token
-    //                 })
-    //             }
-    //         );
-    //         console.log("session_id ", session_id);
-    //     } catch (error) {
-    //         console.log("error ", error)
-    //     }
-    // };
-
     onSubmit = () => {
+        this.setState ({
+            submitting: true
+        });
         const fetchApi = (url, options = {}) => {
             return new Promise((resolve, reject) => {
                 fetch(url, options)
@@ -215,22 +123,6 @@ export default class LoginForm extends React.Component {
             });
     };
 
-    // onLogin = e => {
-    //     e.preventDefault();
-    //     const errors = this.validateFields();
-    //     if (Object.keys(errors).length > 0) {
-    //         console.log("Error");
-    //         this.setState(prevState => ({
-    //             errors: {
-    //                 ...prevState.errors,
-    //                 ...errors
-    //             }
-    //         }))
-    //     } else {
-    //         this.onSubmit()
-    //     }
-    // };
-
     onLogin = e => {
         e.preventDefault();
         const errors = this.validateFields();
@@ -247,7 +139,7 @@ export default class LoginForm extends React.Component {
     };
 
     render() {
-        const {username, password, errors} = this.state;
+        const {username, password, errors, submitting} = this.state;
         return (
             <div className="form-login-container">
                 <form className="form-login">
@@ -289,9 +181,13 @@ export default class LoginForm extends React.Component {
                         type="submit"
                         className="btn btn-lg btn-primary btn-block"
                         onClick={this.onLogin}
+                        disabled={submitting}
                     >
                         Вход
                     </button>
+                    {errors.base && (
+                        <div className="invalid-feedback text-center">{errors.base}</div>
+                    )}
                 </form>
             </div>
         );
