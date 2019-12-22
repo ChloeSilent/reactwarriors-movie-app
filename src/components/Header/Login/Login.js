@@ -14,16 +14,14 @@ export default class Login extends React.Component {
     }
 
     toggleModal = () => {
-        this.setState( prevState => ({
+        this.setState(prevState => ({
             showModal: !prevState.showModal
-            }))
+        }))
     };
 
 
-
-
     render() {
-
+        const {updateSessionId, updateUser} = this.props
         return (
             <div>
                 <button
@@ -35,7 +33,8 @@ export default class Login extends React.Component {
                 </button>
                 <Modal isOpen={this.state.showModal} toggle={this.toggleModal}>
                     <ModalBody>
-                        <LoginForm/>
+                        <LoginForm updateUser={updateUser}
+                                   updateSessionId={updateSessionId}/>
                     </ModalBody>
                 </Modal>
             </div>

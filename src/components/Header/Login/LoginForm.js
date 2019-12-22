@@ -1,5 +1,5 @@
 import React from "react";
-import {API_KEY_3, API_URL} from "../../../api/api";
+import {API_KEY_3, API_URL, fetchApi} from "../../../api/api";
 
 export default class LoginForm extends React.Component {
     state = {
@@ -16,12 +16,12 @@ export default class LoginForm extends React.Component {
         this.setState(prevState => ({
             [name]: value,
             errors: {
+                base: null,
                 ...prevState.errors,
                 [name]: null
             }
         }));
     };
-
 
     handleBlur = () => {
         console.log("on blur");
@@ -47,32 +47,10 @@ export default class LoginForm extends React.Component {
     };
 
     onSubmit = () => {
-        this.setState ({
-            submitting: true
-        });
-        const fetchApi = (url, options = {}) => {
-            return new Promise((resolve, reject) => {
-                fetch(url, options)
-                    .then(response => {
-                        if (response.status < 400) {
-                            return response.json();
-                        } else {
-                            throw response;
-                        }
-                    })
-                    .then(data => {
-                        resolve(data);
-                    })
-                    .catch(response => {
-                        response.json().then(error => {
-                            reject(error);
-                        });
-                    });
-            });
-        };
         this.setState({
             submitting: true
         });
+
         fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
             .then(data => {
                 return fetchApi(
@@ -107,7 +85,16 @@ export default class LoginForm extends React.Component {
                 );
             })
             .then(data => {
-                console.log("session", data);
+                this.props.updateSessionId(data.session_id);
+                return fetchApi(
+                    `${API_URL}/account?api_key=${API_KEY_3}&session_id=${
+                        data.session_id
+                        }`
+                );
+            })
+            .then(user => {
+                console.log("user", user);
+                this.props.updateUser(user);
                 this.setState({
                     submitting: false
                 });
