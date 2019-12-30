@@ -34,3 +34,8 @@
 .invalid-feedback {
     display: block;
 }
+
+.invalid-input {
+    display: block;
+    border-color: #FF0000;
+}
