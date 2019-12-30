@@ -24,14 +24,15 @@ export default class LoginForm extends React.Component {
         }));
     };
 
-    handleBlur = () => {
-        console.log("on blur");
+    handleBlur = event => {
+        const {name} = event.target;
         const errors = this.validateFields();
-        if (Object.keys(errors).length > 0) {
+        const error = errors[name];
+        if (error) {
             this.setState(prevState => ({
                 errors: {
                     ...prevState.errors,
-                    ...errors
+                    [name]: error
                 }
             }));
         }
@@ -48,7 +49,7 @@ export default class LoginForm extends React.Component {
             errors.repeatPassword = "Введите пароль для потдверждения";
         }
 
-        if (this.state.password !== this.state.repeatPassword ) {
+        if (this.state.password !== this.state.repeatPassword) {
             errors.repeatPassword = "Должен быть равен паролю";
         }
 
@@ -178,7 +179,7 @@ export default class LoginForm extends React.Component {
                         <label htmlFor="repeatPassword">Подтвердите пароль</label>
                         <input
                             type="password"
-                            className={errors.repeatPassword ? "form-control invalid-input": "form-control"}
+                            className={errors.repeatPassword ? "form-control invalid-input" : "form-control"}
                             id="repeatPassword"
                             placeholder="Пароль"
                             name="repeatPassword"
