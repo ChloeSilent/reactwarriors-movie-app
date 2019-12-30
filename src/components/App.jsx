@@ -32,11 +32,11 @@ export default class App extends React.Component {
             user
         })
     };
-
+/*maxAge: 2592000*/
     updateSessionId = session_id => {
         cookies.set("session_id", session_id, {
             path: '/',
-            maxAge: 2592000
+            maxAge: 2000
         });
         this.setState({
             session_id
