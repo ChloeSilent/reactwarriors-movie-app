@@ -6,6 +6,9 @@ import Cookies from 'universal-cookie';
 import {API_KEY_3, API_URL, fetchApi} from "../api/api";
 
 const cookies = new Cookies();
+
+export const AppContext = React.createContext();
+
 const initialState = {
     user: null,
     session_id: null,
@@ -89,39 +92,44 @@ export default class App extends React.Component {
         const {filters, page, total_pages, user} = this.state;
 
         return (
-            <div>
-                <Header user={user}
-                        updateUser={this.updateUser}
-                        updateSessionId={this.updateSessionId}/>
-                <div className="container">
-                    <div className="row mt-4">
-                        <div className="col-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h3>Фильтры:</h3>
-                                    <Filters filters={filters}
-                                             onChangeFilters={this.onChangeFilters}
-                                             page={page}
-                                             total_pages={total_pages}
-                                             onChangePage={this.onChangePage}
-                                             onReset={this.onReset}
-                                    />
+            <AppContext.Provider
+            value={{
+                user: user,
+                updateUser: this.updateUser
+            }}>
+                <div>
+                    <Header user={user}
+                            updateSessionId={this.updateSessionId}/>
+                    <div className="container">
+                        <div className="row mt-4">
+                            <div className="col-4">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h3>Фильтры:</h3>
+                                        <Filters filters={filters}
+                                                 onChangeFilters={this.onChangeFilters}
+                                                 page={page}
+                                                 total_pages={total_pages}
+                                                 onChangePage={this.onChangePage}
+                                                 onReset={this.onReset}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-8">
-                            <MovieListContainer
-                                filters={filters}
-                                page={page}
-                                onChangePage={this.onChangePage}
-                                primary_release_year={this.state.filters.primary_release_year}
-                                onChangeTotalPages={this.onChangeTotalPages}
-                                with_genres={this.state.filters.with_genres}
-                            />
+                            <div className="col-8">
+                                <MovieListContainer
+                                    filters={filters}
+                                    page={page}
+                                    onChangePage={this.onChangePage}
+                                    primary_release_year={this.state.filters.primary_release_year}
+                                    onChangeTotalPages={this.onChangeTotalPages}
+                                    with_genres={this.state.filters.with_genres}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </AppContext.Provider>
         );
     }
-}
+};

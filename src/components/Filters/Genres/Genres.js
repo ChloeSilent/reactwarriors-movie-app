@@ -29,7 +29,7 @@ Genres.defaultProps = {
 
 Genres.propTypes = {
     genres: PropTypes.array,
-    with_genres: PropTypes.bool,
+    with_genres: PropTypes.array,
     onChangeGenre: PropTypes.func
 };
 
