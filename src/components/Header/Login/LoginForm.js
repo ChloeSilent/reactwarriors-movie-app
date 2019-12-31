@@ -1,5 +1,6 @@
 import React from "react";
 import {API_KEY_3, API_URL, fetchApi} from "../../../api/api";
+import classNames from "classnames";
 
 export default class LoginForm extends React.Component {
     state = {
@@ -103,14 +104,16 @@ export default class LoginForm extends React.Component {
                 );
             })
             .then(user => {
-                console.log("user", user);
-                this.props.updateUser(user);
-                this.setState({
-                    submitting: false
-                });
+                this.setState(
+                    {
+                        submitting: false
+                    },
+                    () => {
+                        this.props.updateUser(user);
+                    }
+                );
             })
             .catch(error => {
-                console.log("error", error);
                 this.setState({
                     submitting: false,
                     errors: {
@@ -135,6 +138,11 @@ export default class LoginForm extends React.Component {
         }
     };
 
+    getClassForInput = key =>
+        classNames("form-control", {
+            invalid: this.state.errors[key]
+        });
+
     render() {
         const {username, password, errors, submitting, repeatPassword} = this.state;
 
@@ -148,7 +156,7 @@ export default class LoginForm extends React.Component {
                         <label htmlFor="username">Пользователь</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className={this.getClassForInput("username")}
                             id="username"
                             placeholder="Пользователь"
                             name="username"
@@ -164,7 +172,7 @@ export default class LoginForm extends React.Component {
                         <label htmlFor="password">Пароль</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className={this.getClassForInput("password")}
                             id="password"
                             placeholder="Пароль"
                             name="password"
@@ -179,7 +187,7 @@ export default class LoginForm extends React.Component {
                         <label htmlFor="repeatPassword">Подтвердите пароль</label>
                         <input
                             type="password"
-                            className={errors.repeatPassword ? "form-control invalid-input" : "form-control"}
+                            className={this.getClassForInput("repeatPassword")}
                             id="repeatPassword"
                             placeholder="Пароль"
                             name="repeatPassword"

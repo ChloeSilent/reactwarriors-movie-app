@@ -1,6 +1,6 @@
 import React from "react";
 import Filters from "./Filters/Filters";
-import MoviesList from "./Movies/MoviesList";
+import MovieListContainer from "./Movies/MovieListContainer";
 import Header from "./Header/Header";
 import Cookies from 'universal-cookie';
 import {API_KEY_3, API_URL, fetchApi} from "../api/api";
@@ -32,11 +32,11 @@ export default class App extends React.Component {
             user
         })
     };
-
+    /*maxAge: 2592000*/
     updateSessionId = session_id => {
         cookies.set("session_id", session_id, {
             path: '/',
-            maxAge: 2592000
+            maxAge: 2000
         });
         this.setState({
             session_id
@@ -110,12 +110,13 @@ export default class App extends React.Component {
                             </div>
                         </div>
                         <div className="col-8">
-                            <MoviesList filters={filters}
-                                        page={page}
-                                        onChangePage={this.onChangePage}
-                                        primary_release_year={this.state.filters.primary_release_year}
-                                        onChangeTotalPages={this.onChangeTotalPages}
-                                        with_genres={this.state.filters.with_genres}
+                            <MovieListContainer
+                                filters={filters}
+                                page={page}
+                                onChangePage={this.onChangePage}
+                                primary_release_year={this.state.filters.primary_release_year}
+                                onChangeTotalPages={this.onChangeTotalPages}
+                                with_genres={this.state.filters.with_genres}
                             />
                         </div>
                     </div>
