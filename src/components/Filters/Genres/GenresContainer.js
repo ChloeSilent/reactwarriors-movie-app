@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
-import {API_KEY_3, API_URL} from "../../api/api";
+import{API_KEY_3, API_URL} from "../../../api/api";
+import Genres from "./Genres";
 
-
-class Genres extends PureComponent {
+class GenresContainer extends PureComponent {
     constructor() {
         super();
 
@@ -32,7 +32,7 @@ class Genres extends PureComponent {
     onChangeGenre = (event) => {
         const {value, checked} = event.target;
         const {with_genres} = this.props;
-        console.log(event.target);
+
         this.props.onChangeFilters({
             target: {
                 name: "with_genres",
@@ -51,27 +51,12 @@ class Genres extends PureComponent {
         const {with_genres} = this.props;
         return (
 
-            <div className="form-group mb-3">
-                <span>Выберите жанр</span>
-                {genres.map(genre => {
-                    return <div className="form-check"
-                                key={genre.id}>
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id={genre.id}
-                            value={genre.id}
-                            onChange={this.onChangeGenre}
-                            name="with_genres"
-                            checked={with_genres.includes(genre.id.toString())}
-                        />
-                        <label className="form-check-label" htmlFor={genre.id}>{genre.name}</label>
-                    </div>
-                })}
-            </div>
+            <Genres genres={genres}
+            with_genres={with_genres}
+            onChangeGenre={this.onChangeGenre}/>
         );
 
     }
 }
 
-export default Genres;
+export default GenresContainer;
