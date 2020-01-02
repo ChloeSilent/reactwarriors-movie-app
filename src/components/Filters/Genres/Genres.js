@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types"
+import GenresHOC from "./GenresHOC";
 
 const Genres = ({genres, with_genres, onChangeGenre}) => (
     <div className="form-group mb-3">
@@ -33,4 +34,4 @@ Genres.propTypes = {
     onChangeGenre: PropTypes.func
 };
 
-export default Genres;
+export default GenresHOC(Genres);
