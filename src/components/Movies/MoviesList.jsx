@@ -3,6 +3,7 @@ import MovieItem from "./MovieItem";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 import PropTypes from "prop-types";
+import MoviesHOC from "./MoviesHOC";
 
 const style = {
     position: 'absolute',
@@ -41,5 +42,5 @@ MoviesList.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default MoviesList
+export default MoviesHOC(MoviesList);
 

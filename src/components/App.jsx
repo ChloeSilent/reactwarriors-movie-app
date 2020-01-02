@@ -1,6 +1,6 @@
 import React from "react";
 import Filters from "./Filters/Filters";
-import MovieListContainer from "./Movies/MovieListContainer";
+import MoviesList from "./Movies/MoviesList";
 import Header from "./Header/Header";
 import Cookies from 'universal-cookie';
 import {API_KEY_3, API_URL, fetchApi} from "../api/api";
@@ -89,13 +89,15 @@ export default class App extends React.Component {
     }
 
     render() {
-        const {filters, page, total_pages, user} = this.state;
+        const {filters, page, total_pages, user, session_id} = this.state;
 
         return (
             <AppContext.Provider
             value={{
                 user: user,
-                updateUser: this.updateUser
+                updateUser: this.updateUser,
+                session_id: session_id,
+                updateSessionId: this.updateSessionId
             }}>
                 <div>
                     <Header user={user}
@@ -117,13 +119,13 @@ export default class App extends React.Component {
                                 </div>
                             </div>
                             <div className="col-8">
-                                <MovieListContainer
+                                <MoviesList
                                     filters={filters}
                                     page={page}
                                     onChangePage={this.onChangePage}
-                                    primary_release_year={this.state.filters.primary_release_year}
+                                    primary_release_year={filters.primary_release_year}
                                     onChangeTotalPages={this.onChangeTotalPages}
-                                    with_genres={this.state.filters.with_genres}
+                                    with_genres={filters.with_genres}
                                 />
                             </div>
                         </div>
