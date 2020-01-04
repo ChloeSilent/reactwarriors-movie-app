@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
-import{API_KEY_3, API_URL} from "../../../api/api";
-import Genres from "./Genres";
+import CallApi from "../../../api/api";
 
 export default Component => class GenresContainer extends PureComponent {
     constructor() {
@@ -13,16 +12,25 @@ export default Component => class GenresContainer extends PureComponent {
     }
 
     getGenres = () => {
-        const link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`;
-        fetch(link)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.setState({
-                    genres: data.genres
-                });
+        // const link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`;
+        // fetch(link)
+        //     .then(response => {
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         this.setState({
+        //             genres: data.genres
+        //         });
+        //     });
+        CallApi.get("/genre/movie/list", {
+            body: {
+                language: "ru-RU"
+            }
+        }).then(data => {
+            this.setState({
+                genres: data.genres
             });
+        });
     };
 
     componentDidMount() {
@@ -46,14 +54,13 @@ export default Component => class GenresContainer extends PureComponent {
 
 
     render() {
-
         const {genres} = this.state;
         const {with_genres} = this.props;
         return (
 
             <Component genres={genres}
-                    with_genres={with_genres}
-                    onChangeGenre={this.onChangeGenre}/>
+                       with_genres={with_genres}
+                       onChangeGenre={this.onChangeGenre}/>
         );
 
     }

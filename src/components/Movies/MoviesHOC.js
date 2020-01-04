@@ -1,6 +1,6 @@
 import React from "react";
-import {API_URL, API_KEY_3} from "../../api/api";
-import queryString from 'query-string'
+import CallApi from "../../api/api";
+
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import _ from "lodash";
 
@@ -20,7 +20,6 @@ export default Component => class MoviesHOC extends React.Component {
 
         const {sort_by, primary_release_year, with_genres} = filters;
         const queryStringParams = {
-            api_key: API_KEY_3,
             language: "ru-RU",
             sort_by: sort_by,
             page: page,
@@ -28,25 +27,22 @@ export default Component => class MoviesHOC extends React.Component {
             with_genres: with_genres,
 
         };
-        const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`;
+
         this.setState({
             isLoading: true
         });
 
-        fetch(link)
-            .then(response => {
+        CallApi.get('/discover/movie', {
+            params: queryStringParams
+        }).then(data => {
 
-                return response.json();
-            })
-            .then(data => {
-
-                this.setState({
-                    movies: data.results,
-                    isLoading: false
-                });
-
-                this.props.onChangeTotalPages(data.total_pages);
+            this.setState({
+                movies: data.results,
+                isLoading: false
             });
+
+            this.props.onChangeTotalPages(data.total_pages);
+        });
     };
 
 
@@ -68,7 +64,7 @@ export default Component => class MoviesHOC extends React.Component {
 
     render() {
         const {movies, isLoading} = this.state;
-        console.log(Component);
+
         return (
             <Component movies={movies}
                        isLoading={isLoading}/>

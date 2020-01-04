@@ -3,7 +3,7 @@ import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from "./Header/Header";
 import Cookies from 'universal-cookie';
-import {API_KEY_3, API_URL, fetchApi} from "../api/api";
+import CallApi from "../api/api";
 
 const cookies = new Cookies();
 
@@ -80,8 +80,7 @@ export default class App extends React.Component {
     componentDidMount() {
         const session_id = cookies.get("session_id");
         if (session_id) {
-            fetchApi(
-                `${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
+            CallApi.get(null , {body: {session_id: session_id}}
             ).then(user => {
                 this.updateUser(user);
             });
@@ -93,12 +92,12 @@ export default class App extends React.Component {
 
         return (
             <AppContext.Provider
-            value={{
-                user: user,
-                updateUser: this.updateUser,
-                session_id: session_id,
-                updateSessionId: this.updateSessionId
-            }}>
+                value={{
+                    user: user,
+                    updateUser: this.updateUser,
+                    session_id: session_id,
+                    updateSessionId: this.updateSessionId
+                }}>
                 <div>
                     <Header user={user}
                             updateSessionId={this.updateSessionId}/>
