@@ -12,16 +12,6 @@ export default Component => class GenresContainer extends PureComponent {
     }
 
     getGenres = () => {
-        // const link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`;
-        // fetch(link)
-        //     .then(response => {
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         this.setState({
-        //             genres: data.genres
-        //         });
-        //     });
         CallApi.get("/genre/movie/list", {
             body: {
                 language: "ru-RU"
